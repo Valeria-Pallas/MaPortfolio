@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recherche de Livres</title>
+</head>
+<body>
+
+<h2>Recherche de Livres</h2>
+
+<form action="/bibliotheque/rechercheLivres" method="post">
+    <label for="titre">Titre:</label>
+    <input type="text" id="titre" name="titre" placeholder="Titre du livre"/>
+
+    <label for="auteur">Auteur:</label>
+    <input type="text" id="auteur" name="auteur" placeholder="Auteur du livre"/>
+
+    <button type="submit">Rechercher</button>
+</form>
+
+</body>
+</html>
