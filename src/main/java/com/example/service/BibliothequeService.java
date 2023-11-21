@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Models.Livre;
-import com.example.Repository.LivreRepository;
+import com.example.models.Livre;
+import com.example.repository.LivreRepository;
 
 @Service
 public class BibliothequeService {

@@ -1,4 +1,4 @@
-package com.example.Mediatheque_TP4;
+package com.example.run;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,10 +10,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages="com.example")
 @EnableJpaRepositories("com.example.Repository")
 @EntityScan("com.example.Models")   
-public class MediathequeTp4Application {
+public class portfolioApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MediathequeTp4Application.class, args);
+		SpringApplication.run(portfolioApplication.class, args);
 	}
 
 }
