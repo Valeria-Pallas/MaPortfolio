@@ -274,6 +274,10 @@ public class Project {
 		this.status = new_status;
 	}
 
+	/**
+	 * Copy new info, except project's id, to this project
+	 * @param new_project new info of project
+	 */
 	public void copyExceptIdFrom(Project new_project) {
 		this.name = new_project.getName();
 		this.description = new_project.getDescription();

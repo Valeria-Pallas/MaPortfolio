@@ -188,6 +188,11 @@ public class Task {
 		this.user = new_user;
 	}
 
+	/**
+	 * Copy new info, except task's id, to this task
+	 * @param new_task new info of task
+	 */
+
 	public void copyExceptIdFrom(Task new_task) {
 		this.name = new_task.getName();
 		this.description = new_task.getDescription();

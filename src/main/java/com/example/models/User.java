@@ -186,6 +186,10 @@ public class User {
 		this.list_of_projects = project_list;
 	}
 
+	/**
+	 * Copy new info, except user's id, to this user 
+	 * @param new_user new info of user
+	 */
 	public void copyExceptIdFrom(User new_user) {
 		this.name = new_user.getName();
 		this.email = new_user.getEmail();
