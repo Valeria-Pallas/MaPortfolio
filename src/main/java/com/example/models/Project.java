@@ -289,6 +289,72 @@ public class Project {
 		this.list_of_tasks = new_project.getListOfTasks();
 	}
 
+	/**
+	 * Add a new user to list of users if no user exists in the list with the same id
+	 * Do nothing otherwise
+	 * @param new_user new user
+	 */
+	public void addUser(User new_user) {
+		if (this.list_of_users.stream().anyMatch(user -> user.getId() == new_user.getId())){
+			this.list_of_users.add(new_user);
+		}
+	}
+
+	/**
+	 * Update a user with a given id in the list of users with new user info 
+	 * @param id user id
+	 * @param new_user new info of user
+	 */
+	public void updateUserById(int id, User new_user) {
+		for (int i=0; i<this.list_of_users.size(); i++) {
+			if (this.list_of_users.get(i).getId() == id) {
+				this.list_of_users.get(i).copyExceptIdFrom(new_user);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Delete, from the list of users, any user with a given id
+	 * @param id id of user to be deleted
+	 */
+	public void deleteUserById(int id) {
+		this.list_of_users.removeIf(user -> user.getId() == id);
+	}
+
+	/**
+	 * Add a new task to list of tasks if no task exists in the list with the same id
+	 * Do nothing otherwise
+	 * @param new_task new task
+	 */
+	public void addTask(Task new_task) {
+		if (this.list_of_tasks.stream().anyMatch(task -> task.getId() == new_task.getId())) {
+			this.list_of_tasks.add(new_task);
+		}
+	}
+
+	/**
+	 * Update a task with a given id from the list of tasks with new info
+	 * @param id task id
+	 * @param new_task new info of task
+	 */
+	public void updateTaskById(int id, Task new_task) {
+		for (int i=0; i<list_of_tasks.size(); i++) {
+			if (list_of_tasks.get(i).getId() == id) {
+				list_of_tasks.get(i).copyExceptIdFrom(new_task);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Delete, from the list of tasks, any task with a given id 
+	 * @param id id of task to be deleted
+	 */
+	public void deleteTaskById(int id) {
+		this.list_of_tasks.removeIf(task -> task.getId() == id);
+	}
+
 	@Override
 	public String toString() {
 		return "{" +

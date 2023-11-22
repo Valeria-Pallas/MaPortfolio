@@ -198,6 +198,72 @@ public class User {
 		this.list_of_projects = new_user.getListOfProjects();
 	}
 
+	/**
+	 * Add a new task to list of tasks if no task exists in the list with the same id
+	 * Do nothing otherwise
+	 * @param new_task new task
+	 */
+	public void addTask(Task new_task) {
+		if (list_of_tasks.stream().anyMatch(task -> task.getId() == new_task.getId())) {
+			list_of_tasks.add(new_task);
+		}
+	}
+
+	/**
+	 * Update a task with a given id from the list of tasks with new info
+	 * @param id task id
+	 * @param new_task new info of task
+	 */
+	public void updateTaskById(int id, Task new_task) {
+		for (int i=0; i<list_of_tasks.size(); i++) {
+			if (list_of_tasks.get(i).getId() == id) {
+				list_of_tasks.get(i).copyExceptIdFrom(new_task);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Delete, from the list of tasks, any task with a given id 
+	 * @param id id of task to be deleted
+	 */
+	public void deleteTaskById(int id) {
+		list_of_tasks.removeIf(task -> task.getId() == id);
+	}
+
+	/**
+	 * Add a new project to list of projects if no project exists in the list with the same id
+	 * Do nothing otherwise
+	 * @param new_project new project
+	 */
+	public void addProject(Project new_project) {
+		if (list_of_projects.stream().anyMatch(user -> user.getId() == new_project.getId())){
+			list_of_projects.add(new_project);
+		}
+	}
+
+	/**
+	 * Update a project with a given id in the list of projects with new project info 
+	 * @param id project id
+	 * @param new_project new info of project
+	 */
+	public void updateProjectById(int id, Project new_project) {
+		for (int i=0; i<list_of_projects.size(); i++) {
+			if (list_of_projects.get(i).getId() == id) {
+				list_of_projects.get(i).copyExceptIdFrom(new_project);
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Delete, from the list of projects, any project with a given id
+	 * @param id id of project to be deleted
+	 */
+	public void deleteProjectById(int id) {
+		list_of_projects.removeIf(project -> project.getId() == id);
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
