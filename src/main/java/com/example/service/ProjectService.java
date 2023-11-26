@@ -25,18 +25,19 @@ public class ProjectService {
   }
 
   /**
-   * Get a project by project is
+   * Get a project by project id
    * @param id project id
-   * @return 
+   * @return project with this id, null if not found
    */
   public Project getProjectById(int id) {
     return proj_repo.findById(id).orElse(null);
   }
 
   /**
-   * Update project with a given id with info from user input
-   * @param id : project id
-   * @param new_project : info of project to be update
+   * Update project having a given id with info from user-defined input
+   * Do nothing if no project with id is found
+   * @param id project id
+   * @param new_project info of project to be update
    */
   public void updateProjectById(int id, Project new_project) {
     Project project = proj_repo.findById(id).orElse(null);
