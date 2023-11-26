@@ -204,7 +204,7 @@ public class User {
 	 * @param new_task new task
 	 */
 	public void addTask(Task new_task) {
-		if (list_of_tasks.stream().anyMatch(task -> task.getId() == new_task.getId())) {
+		if (!list_of_tasks.stream().anyMatch(task -> task.getId() == new_task.getId())) {
 			list_of_tasks.add(new_task);
 		}
 	}
@@ -237,7 +237,7 @@ public class User {
 	 * @param new_project new project
 	 */
 	public void addProject(Project new_project) {
-		if (list_of_projects.stream().anyMatch(user -> user.getId() == new_project.getId())){
+		if (!list_of_projects.stream().anyMatch(user -> user.getId() == new_project.getId())){
 			list_of_projects.add(new_project);
 		}
 	}

@@ -295,7 +295,7 @@ public class Project {
 	 * @param new_user new user
 	 */
 	public void addUser(User new_user) {
-		if (this.list_of_users.stream().anyMatch(user -> user.getId() == new_user.getId())){
+		if (!this.list_of_users.stream().anyMatch(user -> user.getId() == new_user.getId())){
 			this.list_of_users.add(new_user);
 		}
 	}
@@ -328,7 +328,7 @@ public class Project {
 	 * @param new_task new task
 	 */
 	public void addTask(Task new_task) {
-		if (this.list_of_tasks.stream().anyMatch(task -> task.getId() == new_task.getId())) {
+		if (!this.list_of_tasks.stream().anyMatch(task -> task.getId() == new_task.getId())) {
 			this.list_of_tasks.add(new_task);
 		}
 	}
