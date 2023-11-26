@@ -35,3 +35,6 @@ build/
 
 ### ECLIPSE ###
 .settings/
+
+### all text files ###
+*.txt
