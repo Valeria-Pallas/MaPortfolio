@@ -10,7 +10,7 @@ public class Livre {
     private String isbn;
     private String titre;
     private String auteur;
-    
+
 
     public Livre() {
     }
@@ -45,5 +45,5 @@ public class Livre {
 	public void setAuteur(String auteur) {
 		this.auteur = auteur;
 	}
-    
+
 }
