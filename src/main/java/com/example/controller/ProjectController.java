@@ -46,7 +46,7 @@ public class ProjectController {
     @RequestMapping(value = "/deleteProject/{id}", method = RequestMethod.GET)
     public String supprimerProject(@PathVariable("id") Integer id) {
         // Utiliser le service pour supprimer le projet
-        projectService.deleteProjectById(id);
+        projectService.deleteProject(id);
         // Rediriger vers la liste des projets
         return "redirect:/project/listProjects";
     }
@@ -69,7 +69,7 @@ public class ProjectController {
     @RequestMapping(value = "/modifiedProject/{id}", method = RequestMethod.POST)
     public String modifierProject(@PathVariable("id") Integer id, @ModelAttribute("ProjectToModify") Project projectModified) {
         // Utiliser le service pour mettre à jour le projet
-        projectService.updateProjectById(id, projectModified);
+        projectService.updateProject(id, projectModified);
         // Rediriger vers la liste des projects après la modification
         return "redirect:/project/listeProjects";
     }
@@ -79,5 +79,12 @@ public class ProjectController {
         return "rechercheProjects";
     }
 
-
+    @RequestMapping(value = "/rechercheProjects", method = RequestMethod.POST)
+    public String rechercherProjects(@RequestParam(name = "titre", required = false) String titre,
+                                   @RequestParam(name = "auteur", required = false) String auteur,
+                                   Model model) {
+        List<Project> projectsTrouves = projectService.rechercherProjects(titre, auteur);
+        model.addAttribute("projects", projectsTrouves);
+        return "listeProjects";
+    }
 }
