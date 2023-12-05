@@ -25,10 +25,10 @@
                 <td th:text="${project.id}"></td>
                 <td th:text="${project.name}"></td>
                 <td th:text="${project.description}"></td>
-                <td th:text="${project.status}"></td>
-                <td th:text="${project.start_date}"></td>
-                <td th:text="${project.end_date}"></td>
-                <td th:text="${project.deadline}"></td>
+                <td th:text="${project.Status}"></td>
+                <td th:text="${project.Start_date}"></td>
+                <td th:text="${project.End_date}"></td>
+                <td th:text="${project.Deadline}"></td>
                 <td th:if="${#dates.format(project.endDate, 'dd-MM-yyyy') != '01-01-2000'}" th:text="${#dates.format(project.endDate, 'dd-MM-yyyy')}"></td>
                 <td>
                     <a th:href="@{/bibliotheque/supprimerProject/{id}(id=${project.id})}">Supprimer</a>
