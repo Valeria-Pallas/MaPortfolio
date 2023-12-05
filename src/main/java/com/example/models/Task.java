@@ -2,8 +2,12 @@ package com.example.models;
 
 import java.util.Date;
 
+import com.example.enumeration.TaskStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,8 +37,9 @@ public class Task {
 	private String name;
 	@Column(name = "task_description")
 	private String description;
+	@Enumerated(EnumType.STRING)
 	@Column(name = "task_status")
-	private String status;
+	private TaskStatus status;
 
 	@ManyToOne
 	private User user;
@@ -56,7 +61,7 @@ public class Task {
 	 * @param user        : user associated to task
 	 * @param proj        : project of task
 	 */
-	public Task(int id_task, String name, String description, String status, User user, Project proj) {
+	public Task(int id_task, String name, String description, TaskStatus status, User user, Project proj) {
 		this.id = id_task;
 		this.name = name;
 		this.description = description;
@@ -68,10 +73,10 @@ public class Task {
 	/**
 	 * Set new status for task
 	 * 
-	 * @param new_status
+	 * @param newStatus
 	 */
-	public void updateStatus(String new_status) {
-		this.status = new_status;
+	public void updateStatus(TaskStatus newStatus) {
+		this.status = newStatus;
 	}
 
 	/**
