@@ -4,9 +4,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.example.enumeration.ProjectStatus;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -50,8 +54,10 @@ public class Project {
 	@Column(name = "deadline")
 	private Date deadline;
 
+
+	@Enumerated(EnumType.STRING)
 	@Column(name = "project_status")
-	private String status;
+	private ProjectStatus status;
 	
 	@ManyToMany
 	@JoinTable(name = "user_project", 
@@ -71,7 +77,7 @@ public class Project {
 	 * @param deadline        : expected deadline
 	 * @param status        : project status
 	 */
-	public Project(String name, String description, Date deadline, String status) {
+	public Project(String name, String description, Date deadline, ProjectStatus status) {
 		this.name = name;
 		this.description = description;
 		this.startDate = new Date(System.currentTimeMillis());
@@ -93,7 +99,7 @@ public class Project {
 	 * @param status      : project status
 	 */
 	public Project(String name, String description, Date startDate, Date endDate, Date deadline,
-			String status) {
+			ProjectStatus status) {
 		this.name = name;
 		this.description = description;
 		this.startDate = startDate;
@@ -114,7 +120,7 @@ public class Project {
 	 * @param status      : project status
 	 */
 	public Project(int id, String name, String description, Date startDate, Date endDate, Date deadline,
-			String status) {
+			ProjectStatus status) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -127,10 +133,10 @@ public class Project {
 	/**
 	 * Update project status
 	 * 
-	 * @param new_status new status of project
+	 * @param newStatus new status of project
 	 */
-	public void updateStatus(String new_status) {
-		this.status = new_status;
+	public void updateStatus(ProjectStatus newStatus) {
+		this.status = newStatus;
 	}
 
 	/**
