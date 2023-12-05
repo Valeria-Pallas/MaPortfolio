@@ -1,6 +1,7 @@
 package com.example.models;
 
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -14,8 +15,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,13 +40,15 @@ public class Project {
 	@Column(name = "project_description")
 	private String description;
 
-
+	@Temporal(TemporalType.DATE)
 	@Column(name = "begin_date")
-	private LocalDate startDate;
+	private Date startDate;
+	@Temporal(TemporalType.DATE)
 	@Column(name = "end_date")
-	private LocalDate endDate;
+	private Date endDate;
+	@Temporal(TemporalType.DATE)
 	@Column(name = "deadline")
-	private LocalDate deadline;
+	private Date deadline;
 
 	@Column(name = "project_status")
 	private String status;
@@ -64,15 +68,17 @@ public class Project {
 	 * 
 	 * @param name          : project name
 	 * @param description   : project's description
-	 * @param d_date        : expected deadline
+	 * @param deadline        : expected deadline
 	 * @param status        : project status
 	 */
-	public Project(String name, String description, LocalDate d_date, String status) {
+	public Project(String name, String description, Date deadline, String status) {
 		this.name = name;
 		this.description = description;
-		this.startDate = LocalDate.now();
-		this.endDate = LocalDate.of(2000, 1, 1);
-		this.deadline = d_date;
+		this.startDate = new Date(System.currentTimeMillis());
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2000, Calendar.JANUARY, 1);
+		this.endDate = calendar.getTime();
+		this.deadline = deadline;
 		this.status = status;
 	}
 
@@ -81,18 +87,18 @@ public class Project {
 	 * 
 	 * @param name        : project name
 	 * @param description : project's description
-	 * @param s_date      : starting date
-	 * @param e_date      : ending date
-	 * @param d_date      : expected deadline
+	 * @param startDate      : starting date
+	 * @param endDate      : ending date
+	 * @param deadline      : expected deadline
 	 * @param status      : project status
 	 */
-	public Project(String name, String description, LocalDate s_date, LocalDate e_date, LocalDate d_date,
+	public Project(String name, String description, Date startDate, Date endDate, Date deadline,
 			String status) {
 		this.name = name;
 		this.description = description;
-		this.startDate = s_date;
-		this.endDate = e_date;
-		this.deadline = d_date;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.deadline = deadline;
 		this.status = status;
 	}
 
@@ -102,19 +108,19 @@ public class Project {
 	 * @param id          : project id
 	 * @param name        : project name
 	 * @param description : project's description
-	 * @param s_date      : starting date
-	 * @param e_date      : ending date
-	 * @param d_date      : expected deadline
+	 * @param startDate      : starting date
+	 * @param endDate      : ending date
+	 * @param deadline      : expected deadline
 	 * @param status      : project status
 	 */
-	public Project(int id, String name, String description, LocalDate s_date, LocalDate e_date, LocalDate d_date,
+	public Project(int id, String name, String description, Date startDate, Date endDate, Date deadline,
 			String status) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.startDate = s_date;
-		this.endDate = e_date;
-		this.deadline = d_date;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.deadline = deadline;
 		this.status = status;
 	}
 

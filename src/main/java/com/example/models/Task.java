@@ -1,6 +1,6 @@
 package com.example.models;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,8 +42,9 @@ public class Task {
 	@ManyToOne
 	private Project project;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "deadline")
-	private LocalDate deadline;
+	private Date deadline;
 
 	/**
 	 * Constructor where all attributes, except deadline, comes from user inputs
