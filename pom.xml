@@ -10,7 +10,7 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>Mediatheque_TP4</artifactId>
+	<artifactId>Portfolio</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Portfolio</name>
 	<description>Portfolio project for Spring Rest API</description>
