@@ -22,7 +22,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "project")
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
