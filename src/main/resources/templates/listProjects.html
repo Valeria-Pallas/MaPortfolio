@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Projects</title>
+</head>
+<body>
+
+    <h2>Liste des Projets</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Dead line</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="project : ${projects}">
+                <td th:text="${project.id}"></td>
+                <td th:text="${project.name}"></td>
+                <td th:text="${project.description}"></td>
+                <td th:text="${project.Status}"></td>
+                <td th:text="${project.Start_date}"></td>
+                <td th:text="${project.End_date}"></td>
+                <td th:text="${project.Deadline}"></td>
+                <td th:if="${#dates.format(project.endDate, 'dd-MM-yyyy') != '01-01-2000'}" th:text="${#dates.format(project.endDate, 'dd-MM-yyyy')}"></td>
+                <td>
+                    <a th:href="@{/bibliotheque/supprimerProject/{id}(id=${project.id})}">Supprimer</a>
+                	<a th:href="@{/bibliotheque/modifierProject/{id}(id=${project.id})}">Modifier</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+
+    <a th:href="@{/bibliotheque/ajouterProject}">Ajouter un nouveau project</a><br />
+    <a th:href="@{/bibliotheque/rechercheProjects}" class="btn btn-primary">Recherche de Projects</a>
+    
+
+</body>
+</html>
