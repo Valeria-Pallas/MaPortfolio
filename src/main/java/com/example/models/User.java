@@ -22,6 +22,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,11 +30,11 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "user_portfolio")
-@Data
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Builder
+@NoArgsConstructor //hibernate
+@AllArgsConstructor // mapper
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -53,7 +54,7 @@ public class User implements UserDetails {
 	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	// @Builder.Default
+	@Builder.Default
 	private List<String> roles = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
