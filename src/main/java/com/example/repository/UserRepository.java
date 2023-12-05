@@ -10,6 +10,6 @@ import com.example.models.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
   List<User> FindByName(String name);
   List<User> findByNameContaining(String name);
-  @Query("SELECT u FROM User u JOIN u.list_of_projects p WHERE p.id=:id_proj")
+  @Query("SELECT u FROM User u JOIN u.projects p WHERE p.id=:id_proj")
   List<User> findByProjectId(int id_proj);
 }
