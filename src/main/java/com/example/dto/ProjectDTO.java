@@ -22,7 +22,7 @@ public class ProjectDTO {
 
     /**
      * Constructor where all attributes, except deadline, comes from user inputs
-     * 
+     *
      * @param id          : project id
      * @param name        : project name
      * @param description : project description
@@ -42,7 +42,4 @@ public class ProjectDTO {
         this.status = status;
 
     }
-
-
-
 }
