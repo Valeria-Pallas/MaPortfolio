@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.service.impl;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.models.Task;
 import com.example.repository.TaskRepository;
+import com.example.service.TaskService;
 
 /**
  * @author Valeria Pallas

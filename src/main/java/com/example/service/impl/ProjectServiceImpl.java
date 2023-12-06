@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import com.example.models.Project;
 import com.example.models.Task;
 import com.example.models.User;
 import com.example.repository.ProjectRepository;
+import com.example.service.ProjectService;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
