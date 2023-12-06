@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.models.Project;
 import com.example.models.User;
 import com.example.repository.UserRepository;
+import com.example.service.UserService;
 
 @Service
 @Transactional
