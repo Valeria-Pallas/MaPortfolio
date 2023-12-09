@@ -3,6 +3,8 @@ package com.example.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.models.Task;
 import com.example.repository.TaskRepository;
@@ -12,6 +14,8 @@ import com.example.service.TaskService;
  * @author Valeria Pallas
  * Modified by Tan Nguyen
  */
+@Service
+@Transactional
 public class TaskServiceImpl implements TaskService {
 
 	@Autowired
