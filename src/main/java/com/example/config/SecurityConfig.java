@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -34,6 +36,7 @@ public class SecurityConfig {
     }
   }
 
+  @Bean
   public SecurityFilterChain secureFilterChain(HttpSecurity httpSecure) {
     try {
       httpSecure.csrf(csrf -> csrf.disable())
@@ -51,6 +54,11 @@ public class SecurityConfig {
     } catch (Exception e) {
       throw new SecurityException("Error while getting security filter chain");
     }
+  }
+
+  @Bean
+  public PasswordEncoder passwpEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
   @Bean
