@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewTaskDto implements Serializable {
+public class NewProjectDto implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-    // task id ?
+    // project id ?
 
     @NotBlank
     @Size(min = 3, max = 255)
@@ -27,15 +28,15 @@ public class NewTaskDto implements Serializable {
 
     @NotBlank
     @Size(min = 3, max = 255)
+    private Date start_date;
+
+    @NotBlank
+    @Size(min = 3, max = 255)
+    private Date end_date;
+
+    @NotBlank
+    @Size(min = 3, max = 255)
     private String status;
-
-    @NotBlank
-    @Size(min = 3, max = 255)
-    private int userId;
-
-    @NotBlank
-    @Size(min = 3, max = 255)
-    private int projectId;
 
     @NotBlank
     @Size(min = 3, max = 255)
