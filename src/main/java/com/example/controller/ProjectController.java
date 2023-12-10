@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.models.Project;
 import com.example.service.ProjectService;
@@ -46,7 +43,7 @@ public class ProjectController {
     @RequestMapping(value = "/deleteProject/{id}", method = RequestMethod.GET)
     public String supprimerProject(@PathVariable("id") Integer id) {
         // Utiliser le service pour supprimer le projet
-        projectService.deleteProject(id);
+        projectService.deleteProjectById(id);
         // Rediriger vers la liste des projets
         return "redirect:/project/listProjects";
     }
@@ -66,25 +63,25 @@ public class ProjectController {
         }
     }
 
-    @RequestMapping(value = "/modifiedProject/{id}", method = RequestMethod.POST)
-    public String modifierProject(@PathVariable("id") Integer id, @ModelAttribute("ProjectToModify") Project projectModified) {
-        // Utiliser le service pour mettre à jour le projet
-        projectService.updateProject(id, projectModified);
-        // Rediriger vers la liste des projects après la modification
-        return "redirect:/project/listeProjects";
-    }
+    // @RequestMapping(value = "/modifiedProject/{id}", method = RequestMethod.POST)
+    // public String modifierProject(@PathVariable("id") Integer id, @ModelAttribute("ProjectToModify") Project projectModified) {
+    //     // Utiliser le service pour mettre à jour le projet
+    //     projectService.updateProjectById(id, projectModified);
+    //     // Rediriger vers la liste des projects après la modification
+    //     return "redirect:/project/listeProjects";
+    // }
 
     @RequestMapping(value = "/rechercheProjects", method = RequestMethod.GET)
     public String afficherPageRecherche(Model model) {
         return "rechercheProjects";
     }
 
-    @RequestMapping(value = "/rechercheProjects", method = RequestMethod.POST)
-    public String rechercherProjects(@RequestParam(name = "titre", required = false) String titre,
-                                   @RequestParam(name = "auteur", required = false) String auteur,
-                                   Model model) {
-        List<Project> projectsTrouves = projectService.rechercherProjects(titre, auteur);
-        model.addAttribute("projects", projectsTrouves);
-        return "listeProjects";
-    }
+    // @RequestMapping(value = "/rechercheProjects", method = RequestMethod.POST)
+    // public String rechercherProjects(@RequestParam(name = "titre", required = false) String titre,
+    //                                @RequestParam(name = "auteur", required = false) String auteur,
+    //                                Model model) {
+    //     List<Project> projectsTrouves = projectService.rechercherProjects(titre, auteur);
+    //     model.addAttribute("projects", projectsTrouves);
+    //     return "listeProjects";
+    // }
 }
