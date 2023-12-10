@@ -32,5 +32,10 @@ public class TaskDTO {
         this.deadline = deadline;
     }
 
+    // @GetMapping(value = "/{id}")
+    // public TaskDTO findById(@PathVariable Long id) {
+    //   TaskDTO taskDto = taskMapper.mapToD(taskService.findById(id));
+    //   return taskDto;
+    // }
     // Getters y Setters
 }
