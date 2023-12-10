@@ -1,45 +1,30 @@
 package com.example.dto;
 
-import java.sql.Date; // Cambiado a java.sql.Date
+import java.util.Date;
+import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.example.enumeration.ProjectStatus;
+import com.example.models.Task;
+import com.example.models.User;
 
-@Getter
-@Setter
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProjectDTO {
+
     private int id;
     private String name;
     private String description;
-    private Date start_date; // Cambiado a java.sql.Date
-    private Date end_date; // Cambiado a java.sql.Date
-    private Date deadline; // Cambiado a java.sql.Date
-    private String status;
+    private Date startDate;
+    private Date endDate;
+    private Date deadline;
+    private ProjectStatus status;
+    private List<User> users;
+    private List<Task> tasks;
 
-    // Constructor, getters y setters
-    public ProjectDTO() {
-    }
-
-    /**
-     * Constructor where all attributes, except deadline, comes from user inputs
-     *
-     * @param id          : project id
-     * @param name        : project name
-     * @param description : project description
-     * @param start_date  : project starting date
-     * @param end_date    : project ending date
-     * @param status      : project status
-     */
-
-    public ProjectDTO(int id, String name, String description, Date start_date, Date end_date, Date deadline,
-            String status) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.deadline = deadline;
-        this.status = status;
-
-    }
+    // Getters y Setters
 }
