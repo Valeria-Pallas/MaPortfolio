@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -50,6 +51,9 @@ public class Task {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "deadline")
 	private Date deadline;
+
+	@OneToMany(mappedBy = "task")
+	private Tracking tracking;
 
 	/**
 	 * Constructor where all attributes, except deadline, comes from user inputs
