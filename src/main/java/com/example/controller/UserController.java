@@ -61,8 +61,7 @@ public class UserController {
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Found list of all users", content = {
       @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))
-    }),
-    @ApiResponse(responseCode = "404", description = "List of users not found", content = @Content)
+    })
   })
   @GetMapping(value = "/all")
   public List<UserDTO> findAll() {
@@ -88,7 +87,7 @@ public class UserController {
   }
 
   // TODO - Update a user by id - updateById
-  @Operation(description = "Update inforation of a user")
+  @Operation(description = "Update information of a user")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "204", description = "User updated", content = @Content),
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content)

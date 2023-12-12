@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,6 @@ public class TaskController {
         @ApiResponse(responseCode = "400", description = "Task with the same id exists", content = @Content),
         @ApiResponse(responseCode = "500", description = "Business error", content = @Content),
     })
-
     @PostMapping(value = "/create")
     public ResponseEntity<String> createTask(@RequestBody @Valid NewTaskDto newTaskDto) {
         Task newTask = newTaskDtoMapper.mapToEntity(newTaskDto);
@@ -59,7 +57,12 @@ public class TaskController {
     }
 
     // ...
-
+    @Operation(description = "Obtain information of all tasks")
+    @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Found list of all tasks", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDTO.class))
+      })
+    })
     @GetMapping(value = "/all")
     public List<TaskDTO> findAllTasks() {
       return taskMapper.mapToDtoList(taskService.getAllTasks());

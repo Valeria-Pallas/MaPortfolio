@@ -47,7 +47,7 @@ public class AuthenController {
   // TODO - formData -> authenData
   /**
    * Sign in using the authentication data that was obtained from the request body
-   * @param authenData authentication data
+   * @param formData authentication data
    * @return a response entity with its body as a map containing keys "username" and "token"
    * throw BadCredentialsException if AuthenticationException error found
    */
@@ -58,11 +58,11 @@ public class AuthenController {
     })
   })
   @PostMapping("/signin")
-  public ResponseEntity<Map<Object, Object>> signin(@RequestBody AuthenticationRequest authenData) {
+  public ResponseEntity<Map<Object, Object>> signin(@RequestBody AuthenticationRequest formData) {
     try {
-      String username = authenData.getUsername();
+      String username = formData.getUsername();
       
-      authenManager.authenticate(new UsernamePasswordAuthenticationToken(username, authenData.getPassword()));
+      authenManager.authenticate(new UsernamePasswordAuthenticationToken(username, formData.getPassword()));
       String token = jwtTokenProvider.createToken(username, authenUserRepo.findByUserName(username)
         .orElseThrow(() -> new UsernameNotFoundException("User name " + username + " not found"))
         .getRoles());
