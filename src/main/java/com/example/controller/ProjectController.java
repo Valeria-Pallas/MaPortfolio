@@ -1,87 +1,102 @@
 package com.example.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.dto.NewProjectDto;
+import com.example.dto.ProjectDTO;
 import com.example.models.Project;
 import com.example.service.ProjectService;
+import com.example.util.NewProjectDTOMapper;
+import com.example.util.ProjectMapper;
 
-@Controller
-@RequestMapping("/project")
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/projects")
 public class ProjectController {
 
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping(value = {"/listProjects"}, method = RequestMethod.GET)
-    public String listeProjects(Model model) {
-        // Utiliser le service pour obtenir la liste des projets
-        model.addAttribute("projects", projectService.getAllProjects());
-        return "listProjects";
+    @Autowired
+    private ProjectMapper projectMapper;
+
+    @Autowired
+    private NewProjectDTOMapper newProjectMapper;
+
+    @Operation(description = "Create a new project")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Project created", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Project with the same id exists", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Business error", content = @Content),
+    })
+    @PostMapping(value = "/create")
+    public ResponseEntity<String> createProject(@RequestBody @Valid NewProjectDto newProjectDto) {
+        Project newProject = newProjectMapper.mapToEntity(newProjectDto);
+        return new ResponseEntity<>(projectService.addProject(newProject) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/addProject", method = RequestMethod.GET)
-    public String afficherFormulaireAjout(Model model) {
-        // Afficher le formulaire d'ajout de projet
-        model.addAttribute("addProject", new Project());
-        return "formAddProject";
-    }
+  @Operation(description = "Obtain information of all projects")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Found list of all projects", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDTO.class))
+    })
+  })
+  @GetMapping(value = "/all")
+  public List<ProjectDTO> findAll() {
+    return projectMapper.mapToDtoList(projectService.getAllProjects());
+  }
 
-    @RequestMapping(value = "/addProject", method = RequestMethod.POST)
-    public String ajouterProject(@ModelAttribute("addProject") Project addProject) {
-        // Utiliser le service pour ajouter le nouveau projet
-        projectService.addProject(addProject);
-        // Rediriger vers la liste des projets
-        return "redirect:/project/listeProjects";
-    }
+  @Operation(description = "Obtain information of a project by project id")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "project found", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDTO.class))
+    }),
+    @ApiResponse(responseCode = "404", description = "project not found", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDTO.class))
+    })
+  })
+  @GetMapping(value = "/{id}")
+  public ProjectDTO findById(@Parameter(description = "id of project to be searched") @PathVariable int id) {
+    return projectMapper.mapToDto(projectService.getProjectById(id));
+  }
 
-    @RequestMapping(value = "/deleteProject/{id}", method = RequestMethod.GET)
-    public String supprimerProject(@PathVariable("id") Integer id) {
-        // Utiliser le service pour supprimer le projet
-        projectService.deleteProjectById(id);
-        // Rediriger vers la liste des projets
-        return "redirect:/project/listProjects";
-    }
+  @Operation(description = "Update information of a project")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "204", description = "Project updated", content = @Content),
+    @ApiResponse(responseCode = "404", description = "Project not found", content = @Content)
+  })
+  @PutMapping(value = "/{id}")
+  public ResponseEntity<String> updateProject(@RequestBody @Valid ProjectDTO projectDTO) {
+    boolean success = projectService.updateProject(projectMapper.mapToEntity(projectDTO));
+    return new ResponseEntity<>(success ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
+  }
 
-    @RequestMapping(value = "/modifyProject/{isbn}", method = RequestMethod.GET)
-    public String afficherFormulaireModification(@PathVariable("id") Integer id, Model model) {
-        // Utiliser le service pour obtenir le project par ISBN
-        Project ProjectToModify = projectService.getProjectById(id);
-
-        if (ProjectToModify != null) {
-            // Ajouter le project au modèle
-            model.addAttribute("ProjectToModify", ProjectToModify);
-            return "modifiedProject";
-        } else {
-            // Rediriger vers la liste des projects si le livre n'est pas trouvé
-            return "redirect:/project/listProjects";
-        }
-    }
-
-    // @RequestMapping(value = "/modifiedProject/{id}", method = RequestMethod.POST)
-    // public String modifierProject(@PathVariable("id") Integer id, @ModelAttribute("ProjectToModify") Project projectModified) {
-    //     // Utiliser le service pour mettre à jour le projet
-    //     projectService.updateProjectById(id, projectModified);
-    //     // Rediriger vers la liste des projects après la modification
-    //     return "redirect:/project/listeProjects";
-    // }
-
-    @RequestMapping(value = "/rechercheProjects", method = RequestMethod.GET)
-    public String afficherPageRecherche(Model model) {
-        return "rechercheProjects";
-    }
-
-    // @RequestMapping(value = "/rechercheProjects", method = RequestMethod.POST)
-    // public String rechercherProjects(@RequestParam(name = "titre", required = false) String titre,
-    //                                @RequestParam(name = "auteur", required = false) String auteur,
-    //                                Model model) {
-    //     List<Project> projectsTrouves = projectService.rechercherProjects(titre, auteur);
-    //     model.addAttribute("projects", projectsTrouves);
-    //     return "listeProjects";
-    // }
+  @Operation(description = "Delete a project by id")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "204", description = "Project deleted", content = @Content),
+    @ApiResponse(responseCode = "404", description = "Project not found", content = @Content)
+  })
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<String> deleteProject(@Parameter(description = "id of project to be deleted") @PathVariable int id) {
+    return new ResponseEntity<>(projectService.deleteProjectById(id) ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND); 
+  }
 }
