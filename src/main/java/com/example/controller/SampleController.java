@@ -13,7 +13,7 @@ import com.example.models.Person;
 
 @Controller
 public class SampleController {
-	
+
     private String personName = "AncienNom";
 
     @GetMapping("/helloWorld")
@@ -21,33 +21,33 @@ public class SampleController {
     public String helloWorld() {
         return "Hello world!";
     }
-    
+
     @GetMapping("/greet/{name}")
     @ResponseBody
     public String greet(@PathVariable String name) {
         return "Salut, " + name + "!";
     }
-    
+
     @GetMapping("/sum")
     @ResponseBody
     public String sum(@RequestParam int a, @RequestParam int b) {
         int result = a + b;
         return a + " + " + b + " = " + result;
     }
-    
+
     @GetMapping("/multiply/{x}/{y}")
     @ResponseBody
     public String multiply(@PathVariable int x, @PathVariable int y) {
         int result = x * y;
         return x + " * " + y + " = " + result;
     }
-    
+
     @PostMapping("/helloWorld")
     @ResponseBody
     public String helloWorld(@RequestBody Person person) {
         return "Salut, " + person.getName() + "! Tu as " + person.getAge() + " ans.";
     }
-    
+
     @PutMapping("/updateName")
     @ResponseBody
     public String updateName(@RequestParam String newName) {

@@ -1,23 +1,31 @@
-package com.example.repository;
+package com.example.service;
 
 import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
 import com.example.models.Task;
 
 /**
  * @author Valeria Pallas
+ * Modified by Tan Nguyen
  */
-public interface TaskRepository extends JpaRepository<Task, Integer> {
+@Service
+public interface TaskService {
+	
+	boolean createTask(Task task);
 
-    List<Task> findByStatus(String status);
-    List<Task> findByNameContainingIgnoreCase(String keyword);
+	List<Task> getAllTasks();
+	
+	Task getTaskById(int id);
 
-    List<Task> findByUserId(int userId);
+	boolean updateTask(Task taskModifie);
+	
+	boolean deleteTask(int id);
 
-    List<Task> findByProjectId(int projectId);
+	List<Task> getAllTasksByUserId(int userId);
 
-    List<Task> findByUserIdAndProjectId(int userId, int projectId);
+	List<Task> getAllTasksByProjectId(int projectId);
+
+	List<Task> getTasksByUserIdAndProjectId(int userId, int projectId);
 
 }
