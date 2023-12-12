@@ -2,10 +2,10 @@ package com.example.util;
 
 import org.mapstruct.Mapper;
 
-import com.example.dto.NewUserDto;
+import com.example.dto.NewUserDTO;
 import com.example.models.User;
 
 @Mapper(componentModel = "spring")
-public interface NewUserDtoMapper extends ApplicationMapper<User, NewUserDto> {
+public interface NewUserDTOMapper extends ApplicationMapper<User, NewUserDTO> {
 
 }
