@@ -21,7 +21,7 @@ public class TaskServiceImpl implements TaskService {
 	@Autowired
 	private TaskRepository taskRepository;
 
-	public boolean createTask(Task task) {
+	public boolean addTask(Task task) {
     if (taskRepository.findById(task.getId()).isPresent()) {
       return false;
     }
