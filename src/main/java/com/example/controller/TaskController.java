@@ -62,12 +62,7 @@ public class TaskController {
 
     @GetMapping(value = "/all")
     public List<TaskDTO> findAllTasks() {
-      List<Task> allTasks = taskService.getAllTasks();
-      List<TaskDTO> taskDTOs = new ArrayList<>();
-      for (Task task : allTasks) {
-        taskDTOs.add(taskMapper.mapToDto(task));
-      }
-      return taskDTOs;
+      return taskMapper.mapToDtoList(taskService.getAllTasks());
     }
 
     @Operation(description = "Obtain information of a task by task id")
