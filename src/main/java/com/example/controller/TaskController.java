@@ -19,7 +19,7 @@ import com.example.dto.NewTaskDto;
 import com.example.dto.TaskDTO;
 import com.example.models.Task;
 import com.example.service.TaskService;
-import com.example.util.NewTaskDtoMapper;
+import com.example.util.NewTaskDTOMapper;
 import com.example.util.TaskMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,7 +42,7 @@ public class TaskController {
     private TaskMapper taskMapper;
 
     @Autowired
-    private NewTaskDtoMapper newTaskDtoMapper;
+    private NewTaskDTOMapper newTaskDtoMapper;
 
     @Operation(description = "Create a new task")
     @ApiResponses(value = {

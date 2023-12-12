@@ -29,4 +29,6 @@ public interface TaskService {
 
 	List<Task> getTasksByUserIdAndProjectId(int userId, int projectId);
 
+  boolean addTask(Task newTask);
+
 }
