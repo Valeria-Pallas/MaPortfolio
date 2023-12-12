@@ -2,9 +2,11 @@ package com.example.controller;
 
 import java.util.List;
 
+import com.example.dto.NewUserDto;
 import com.example.dto.UserDTO;
 import com.example.models.User;
 import com.example.service.UserService;
+import com.example.util.NewUserDTOMapper;
 import com.example.util.UserMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +20,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,9 +40,7 @@ public class UserController {
   @Autowired
   private UserMapper userMapper;
 
-  private NewUserDtoMapper newUserMapper;
-
-  private 
+  private NewUserDTOMapper newUserMapper;
   
   @Operation(description = "Create a new user")
   @ApiResponses(value = {
@@ -51,7 +50,7 @@ public class UserController {
   })
   @PostMapping(value = "/create")
   public ResponseEntity<String> createUser(@RequestBody @Valid NewUserDto newUserDto) {
-    User newUser = newUserMapper.mapToE(newUserDto);
+    User newUser = newUserMapper.mapToEntity(newUserDto);
     return new ResponseEntity<>(userService.addUser(newUser) ? HttpStatus.CREATED
                                                              : HttpStatus.BAD_REQUEST);
   }
@@ -69,7 +68,7 @@ public class UserController {
   public List<UserDTO> findAll() {
     List<User> allUsers = userService.getAllUsers();
     // TODO - add mapToDList
-    return userMapper.mapToDList(allUsers);
+    return userMapper.mapToDtoList(allUsers);
   }
 
   // TODO - Read a user by id - findById
@@ -83,14 +82,14 @@ public class UserController {
     })
   })
   @GetMapping(value = "/{id}")
-  public UserDto findById(@Parameter(description = "id of user to be searched") @PathVariable int id) {
+  public UserDTO findById(@Parameter(description = "id of user to be searched") @PathVariable int id) {
     // TODO - User SecurityContextHolder to enforce user authorization
-    return userMapper.mapToD(userService.getUserById(id));
+    return userMapper.mapToDto(userService.getUserById(id));
   }
 
   // TODO - Update a user by id - updateById
   @Operation(description = "Update inforation of a user")
-  @ApiResponse(value = {
+  @ApiResponses(value = {
     @ApiResponse(responseCode = "204", description = "User updated", content = @Content),
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
   })
@@ -99,13 +98,13 @@ public class UserController {
     // TODO - User SecurityContextHolder to enforce user authorization
     // TODO:
     // if (userDTO.getName().equals(SecurityContextHolder.getContext().getAuthentication().getPrincipal())) {
-    boolean success = userService.updateUser(userMapper.mapToE(userDTO));
+    boolean success = userService.updateUser(userMapper.mapToEntity(userDTO));
     return new ResponseEntity<>(success ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
   }
 
   // TODO - Delete a user by id - deleteById
   @Operation(description = "Delete a user by id")
-  @ApiResponse(value = {
+  @ApiResponses(value = {
     @ApiResponse(responseCode = "204", description = "User deleted", content = @Content),
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
   })
