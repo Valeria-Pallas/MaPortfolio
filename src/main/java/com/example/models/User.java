@@ -20,7 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,14 +43,13 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@NotEmpty
+	@NotBlank
 	@Column(name = "user_name")
 	private String name;
+	
+	@NotBlank
 	@Column(name = "email")
 	private String email;
-	@NotEmpty
-	@Column(name = "password")
-	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
@@ -61,6 +60,10 @@ public class User implements UserDetails {
 	
 	@ManyToMany(mappedBy = "users")
 	private List<Project> projects;
+	
+	@NotBlank
+	@Column(name = "password")
+	private String password;
 
 	/**
 	 * Constructor using user inputs

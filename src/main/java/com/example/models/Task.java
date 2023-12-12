@@ -16,6 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,10 +37,14 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@NotBlank
 	@Column(name = "task_name")
 	private String name;
+	
 	@Column(name = "task_description")
 	private String description;
+	
+	@NotBlank
 	@Enumerated(EnumType.STRING)
 	@Column(name = "task_status")
 	private TaskStatus status;

@@ -21,6 +21,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,22 +43,26 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@NotBlank
 	@Column(name = "project_name")
 	private String name;
+	
 	@Column(name = "project_description")
 	private String description;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "begin_date")
 	private Date startDate;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "end_date")
 	private Date endDate;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "deadline")
 	private Date deadline;
 
-
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "project_status")
 	private ProjectStatus status;
