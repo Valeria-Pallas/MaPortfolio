@@ -1,6 +1,7 @@
 package com.example.models;
 
 import java.util.Date;
+import java.util.List;
 
 import com.example.enumeration.TaskStatus;
 
@@ -60,7 +61,7 @@ public class Task {
 	private Date deadline;
 
 	@OneToMany(mappedBy = "task")
-	private Tracking tracking;
+	private List<Tracking> trackings;
 
 	/**
 	 * Constructor where all attributes, except deadline, comes from user inputs
