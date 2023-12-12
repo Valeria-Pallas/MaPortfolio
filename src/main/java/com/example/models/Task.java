@@ -1,17 +1,35 @@
 package com.example.models;
 
-import java.time.LocalDate;
+import java.util.Date;
+
+import com.example.enumeration.TaskStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "task")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
 
 	@Id
@@ -19,12 +37,17 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@NotBlank
 	@Column(name = "task_name")
 	private String name;
+	
 	@Column(name = "task_description")
 	private String description;
+	
+	@NotBlank
+	@Enumerated(EnumType.STRING)
 	@Column(name = "task_status")
-	private String status;
+	private TaskStatus status;
 
 	@ManyToOne
 	private User user;
@@ -32,11 +55,12 @@ public class Task {
 	@ManyToOne
 	private Project project;
 
+	@Temporal(TemporalType.DATE)
 	@Column(name = "deadline")
-	private LocalDate deadline;
+	private Date deadline;
 
-	public Task() {
-	}
+	@OneToMany(mappedBy = "task")
+	private Tracking tracking;
 
 	/**
 	 * Constructor where all attributes, except deadline, comes from user inputs
@@ -48,135 +72,22 @@ public class Task {
 	 * @param user        : user associated to task
 	 * @param proj        : project of task
 	 */
-	public Task(int id_task, String name, String description, String status, User user, Project proj) {
+	public Task(int id_task, String name, String description, TaskStatus status, User user, Project proj) {
 		this.id = id_task;
 		this.name = name;
 		this.description = description;
 		this.status = status;
 		this.user = user;
 		this.project = proj;
-	}
-
-	/**
-	 * Full constructor using user inputs
-	 * 
-	 * @param id_task     : task id
-	 * @param name        : task name
-	 * @param description : task description
-	 * @param status      : task status
-	 * @param user        : user associated to task
-	 * @param proj        : project of task
-	 * @param deadline    : deadline of task
-	 */
-	public Task(int id_task, String name, String description, String status, User user, Project proj,
-			LocalDate deadline) {
-		this.id = id_task;
-		this.name = name;
-		this.description = description;
-		this.status = status;
-		this.user = user;
-		this.project = proj;
-		this.deadline = deadline;
-	}
-
-	/**
-	 * Get task id
-	 * 
-	 * @return task id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * Get task name
-	 * 
-	 * @return task name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Get task description
-	 * 
-	 * @return task description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * Get task status
-	 * 
-	 * @return task status
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-	/**
-	 * Get user who will do task
-	 * 
-	 * @return user
-	 */
-	public User getUser() {
-		return user;
-	}
-
-	/**
-	 * Get project to which task belongs
-	 * 
-	 * @return project
-	 */
-	public Project getProject() {
-		return project;
-	}
-
-	/**
-	 * Get deadline of task
-	 * 
-	 * @return deadline
-	 */
-	public LocalDate getDeadline() {
-		return deadline;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
-	public void setDeadline(LocalDate deadline) {
-		this.deadline = deadline;
 	}
 
 	/**
 	 * Set new status for task
 	 * 
-	 * @param new_status
+	 * @param newStatus
 	 */
-	public void updateStatus(String new_status) {
-		this.status = new_status;
+	public void updateStatus(TaskStatus newStatus) {
+		this.status = newStatus;
 	}
 
 	/**
@@ -187,6 +98,11 @@ public class Task {
 	public void updateUser(User new_user) {
 		this.user = new_user;
 	}
+
+	/**
+	 * Copy new info, except task's id, to this task
+	 * @param new_task new info of task
+	 */
 
 	public void copyExceptIdFrom(Task new_task) {
 		this.name = new_task.getName();
