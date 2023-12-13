@@ -78,6 +78,13 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
+	public User(String name, String email, String password, List<String> roles) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+	}
+
 	/**
 	 * Constructor using user inputs
 	 * 
