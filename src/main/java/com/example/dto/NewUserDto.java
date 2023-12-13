@@ -3,8 +3,10 @@ package com.example.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.example.models.Project;
-import com.example.models.Task;
+import jakarta.persistence.Column;
+
+// import com.example.models.Project;
+// import com.example.models.Task;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -28,12 +30,16 @@ public class NewUserDto implements Serializable {
 
     private List<String> roles;
 
-    private List<Task> tasks;
+    // private List<Task> tasks;
 
-    private List<Project> projects;
+    // private List<Project> projects;
 
     @NotBlank
     @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$",
             message = "business.validation.constraints.email.message")
     private String email;
+    
+	@NotBlank
+	@Column(name = "password")
+	private String password;
 }

@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 
 @RestController
-@RequestMapping("/signin")
+@RequestMapping("/auth")
 public class AuthenController {
 
   @Autowired
