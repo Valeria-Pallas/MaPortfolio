@@ -12,7 +12,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +30,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 
 
+@CrossOrigin(origins = "http://localhost:4200")
+// @CrossOrigin(origins = "localhost")
 @RestController
 @RequestMapping("/auth")
 public class AuthenController {
