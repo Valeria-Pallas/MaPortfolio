@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.NewProjectDto;
 import com.example.dto.ProjectDTO;
+import com.example.dto.TaskDTO;
+import com.example.dto.UserDTO;
 import com.example.models.Project;
 import com.example.service.ProjectService;
+import com.example.service.TaskService;
 import com.example.util.NewProjectDTOMapper;
 import com.example.util.ProjectMapper;
+import com.example.util.TaskMapper;
+import com.example.util.UserMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -44,6 +49,15 @@ public class ProjectController {
 
     @Autowired
     private NewProjectDTOMapper newProjectMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private TaskService taskService;
+
+    @Autowired
+    private TaskMapper taskMapper;
 
     @Operation(description = "Create a new project")
     @ApiResponses(value = {
@@ -101,5 +115,27 @@ public class ProjectController {
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<String> deleteProject(@Parameter(description = "id of project to be deleted") @PathVariable int id) {
     return new ResponseEntity<>(projectService.deleteProjectById(id) ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND); 
+  }
+
+  @Operation(description = "Obtain information of all users of a project")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Found list of users of this project", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class))
+    })
+  })
+  @GetMapping(value = "/{id}/users")
+  public List<UserDTO> findUsersOfProject(@Parameter(description = "id of project") @PathVariable int id) {
+    return userMapper.mapToDtoList(projectService.getAllUsersByProjectId(id));
+  }
+
+  @Operation(description = "Obtain information of all tasks of a project")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Found list of tasks of this project", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDTO.class))
+    })
+  })
+  @GetMapping(value = "/{id}/tasks")
+  public List<TaskDTO> findTasksOfProject(@Parameter(description = "id of project") @PathVariable int id) {
+    return taskMapper.mapToDtoList(taskService.getAllTasksByProjectId(id));
   }
 }
