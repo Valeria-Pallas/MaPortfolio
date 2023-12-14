@@ -3,10 +3,15 @@ package com.example.controller;
 import java.util.List;
 
 import com.example.dto.NewUserDto;
+import com.example.dto.ProjectDTO;
+import com.example.dto.TaskDTO;
 import com.example.dto.UserDTO;
 import com.example.models.User;
+import com.example.service.TaskService;
 import com.example.service.UserService;
 import com.example.util.NewUserDTOMapper;
+import com.example.util.ProjectMapper;
+import com.example.util.TaskMapper;
 import com.example.util.UserMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +45,17 @@ public class UserController {
   @Autowired
   private UserMapper userMapper;
 
+  @Autowired
   private NewUserDTOMapper newUserMapper;
+
+  @Autowired
+  private ProjectMapper projectMapper;
+
+  @Autowired
+  private TaskService taskService;
+
+  @Autowired
+  private TaskMapper taskMapper;
   
   @Operation(description = "Create a new user")
   @ApiResponses(value = {
@@ -111,5 +126,27 @@ public class UserController {
   public ResponseEntity<String> deleteUser(@Parameter(description = "id of user to be deleted") @PathVariable int id) {
     // TODO - User SecurityContextHolder to enforce user authorization
     return new ResponseEntity<>(userService.deleteUser(id) ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND); 
+  }
+
+  @Operation(description = "Obtain information of all projects of a user")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Found list of projects of this user", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = ProjectDTO.class))
+    })
+  })
+  @GetMapping(value = "/{id}/projects")
+  public List<ProjectDTO> findProjectsOfUser(@Parameter(description = "id of user") @PathVariable int id) {
+    return projectMapper.mapToDtoList(userService.getAllProjectsByUserId(id));
+  }
+
+  @Operation(description = "Obtain information of all tasks of a user")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Found list of tasks of this user", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDTO.class))
+    })
+  })
+  @GetMapping(value = "/{id}/tasks")
+  public List<TaskDTO> findTasksOfUser(@Parameter(description = "id of user") @PathVariable int id) {
+    return taskMapper.mapToDtoList(taskService.getAllTasksByUserId(id));
   }
 }
