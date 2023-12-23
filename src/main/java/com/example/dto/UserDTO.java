@@ -9,6 +9,7 @@ public record UserDTO(
   int id,
   String name,
   String email,
+  String password,
   List<String> roles
   // List<Task> tasks,
   // List<Project> projects
